@@ -27,5 +27,5 @@ jobs:
       uses: JP1016/github-pages-deploy-action@v2.2.2
       with:
         build_dir: build # 这里的 build 目录需要替换为你的 build 目录
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
         PUBLISH_BRANCH: main # 这里的 gh-pages 分支需要替换为你自己的
