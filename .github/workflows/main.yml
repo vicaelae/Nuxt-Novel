@@ -6,26 +6,34 @@ on:
       - master # 这里的分支名需要替换为你自己的
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout source codes
+        uses: actions/checkout@v2
+        with:
+          submodules: "recursive" # 如果你的项目中有 git 子模块，可以选择启用递归模式
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2-beta
-      with:
-        node-version: 12.x
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+        env:
+          CI: true
 
-    - name: Install Dependencies
-      run: npm install
-      
-    - name: Build app
-      run: npm build
+      - name: Install dependencies
+        run: npm install
+        env:
+          CI: true
 
-    - name: Deploy to GitHub Pages
-      uses: JP1016/github-pages-deploy-action@v2.2.2
-      with:
-        build_dir: build # 这里的 build 目录需要替换为你的 build 目录
-        GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        PUBLISH_BRANCH: master # 这里的 gh-pages 分支需要替换为你自己的
+      - name: Build
+        run: npm run build
+        env:
+          CI: true
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.TOKEN }}
+          publish_dir: ./build # 这里的 build 目录需要替换为你的 build 目录，用于上传的静态文件目录
+          publish_branch: master # 这里的 gh-pages 分支需要替换为你自己的
