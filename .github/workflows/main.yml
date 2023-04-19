@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # 这里的分支名需要替换为你自己的
+      - master # 这里的分支名需要替换为你自己的
 
 jobs:
   build-and-deploy:
@@ -28,4 +28,4 @@ jobs:
       with:
         build_dir: build # 这里的 build 目录需要替换为你的 build 目录
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
-        PUBLISH_BRANCH: main # 这里的 gh-pages 分支需要替换为你自己的
+        PUBLISH_BRANCH: master # 这里的 gh-pages 分支需要替换为你自己的
