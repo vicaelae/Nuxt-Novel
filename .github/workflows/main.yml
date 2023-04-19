@@ -1,0 +1,31 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # 这里的分支名需要替换为你自己的
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2-beta
+      with:
+        node-version: 12.x
+
+    - name: Install Dependencies
+      run: npm install
+      
+    - name: Build app
+      run: npm build
+
+    - name: Deploy to GitHub Pages
+      uses: JP1016/github-pages-deploy-action@v2.2.2
+      with:
+        build_dir: build # 这里的 build 目录需要替换为你的 build 目录
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PUBLISH_BRANCH: main # 这里的 gh-pages 分支需要替换为你自己的
